@@ -16,3 +16,7 @@ app.listen(3000, ()=>{
 app.get('/', (req, res) => {
     res.send("Welcome to Vidly project");
 });
+
+app.get('/api/genres', (req, res)=>{
+    res.send(genres);
+});
