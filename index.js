@@ -9,14 +9,17 @@ var genres = [
     {id: 3, genre: "Comdey"},
 ];
 
+// preparing listening ports
 app.listen(3000, ()=>{
     console.log("Listening to port 3000 .... ");
 });
 
+// Root page response
 app.get('/', (req, res) => {
     res.send("Welcome to Vidly project");
 });
 
+// Get genres response
 app.get('/api/genres', (req, res)=>{
     res.send(genres);
 });
