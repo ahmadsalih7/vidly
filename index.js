@@ -23,3 +23,13 @@ app.get('/', (req, res) => {
 app.get('/api/genres', (req, res)=>{
     res.send(genres);
 });
+
+// Get genre by ID
+app.get('/api/genres/:id', (req, res) =>{
+    // Check if the ID is existed
+    const genre = genres.find(x=> x.id === parseInt(req.params.id));
+    // if there is no genre found 
+    if (!genre) return res.status(404).send("No genre was found with this ID.");
+    // else: 
+    res.send(genre);
+});
