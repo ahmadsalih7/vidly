@@ -7,6 +7,7 @@ const Joi = require('joi');
 
 app.use(express.json());
 app.use(logger);
+app.use(express.static("public"));
 
 var genres = [
     {id: 1, name: "Horror"},
