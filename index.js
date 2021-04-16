@@ -6,9 +6,9 @@ const Joi = require('joi');
 app.use(express.json());
 
 var genres = [
-    {id: 1, genre: "Horror"},
-    {id: 2, genre: "Action"},
-    {id: 3, genre: "Comdey"},
+    {id: 1, name: "Horror"},
+    {id: 2, name: "Action"},
+    {id: 3, name: "Comdey"},
 ];
 
 // preparing listening ports
@@ -45,7 +45,7 @@ app.post('/api/genres', (req, res)=>{
     // else create genre object
     const genre = {
         id: genres.length + 1,
-        genre: req.body.genre
+        name: req.body.name
     };
     // append it to the current genres 
     genres.push(genre);
@@ -65,7 +65,7 @@ app.put('/api/genres/:id', (req, res) => {
     // If it's  not valid send the error and return
     if (error) return res.status(400).send(error.details[0].message);
     // else update genre object
-    genre.genre = req.body.genre;
+    genre.name = req.body.name;
     // response with the appended genre
     res.send(genre);
 });
@@ -91,7 +91,7 @@ res.send(genre);
 function validateGenre(genre) {
     //Define schema 
     const schema = Joi.object({
-        genre: Joi.string().min(3).required()
+        name: Joi.string().min(3).required()
     });
     
     return schema.validate(genre);
