@@ -53,6 +53,23 @@ app.post('/api/genres', (req, res)=>{
     res.send(genre);
 });
 
+// Update genre using PUT request
+
+app.put('/api/genres/:id', (req, res) => {
+    // Check if the ID is existed
+    const genre = genres.find(x=> x.id === parseInt(req.params.id));
+    // if there is no genre found
+    if (!genre) return res.status(404).send("No genre was found with this ID.");
+    //validate the JSON input is a valid genre object
+    const {error} = validateGenre (req.body);
+    // If it's  not valid send the error and return
+    if (error) return res.status(400).send(error.details[0].message);
+    // else update genre object
+    genre.genre = req.body.genre;
+    // response with the appended genre
+    res.send(genre);
+});
+
 // add validate function
 function validateGenre(genre) {
     //Define schema 
