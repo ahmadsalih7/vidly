@@ -70,6 +70,23 @@ app.put('/api/genres/:id', (req, res) => {
     res.send(genre);
 });
 
+// delete genres using delete request
+app.delete('/api/genres/:id', (req, res)=> {
+// Check if the ID is existed
+const genre = genres.find(x=> x.id === parseInt(req.params.id));
+// if there is no genre found
+if (!genre) return res.status(404).send("No genre was found with this ID.");
+// else delete genre object
+const index = genres.indexOf(genre);
+genres.splice(index, 1);
+
+//Response with the deleted genre
+res.send(genre);
+
+});
+
+
+
 // add validate function
 function validateGenre(genre) {
     //Define schema 
