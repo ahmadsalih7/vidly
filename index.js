@@ -1,9 +1,12 @@
 const express = require('express');
+const logger = require('./logger');
+
 const app = express();
 
 const Joi = require('joi');
 
 app.use(express.json());
+app.use(logger);
 
 var genres = [
     {id: 1, name: "Horror"},
@@ -13,7 +16,7 @@ var genres = [
 
 // preparing listening ports
 app.listen(3000, ()=>{
-    console.log("Listening to port 3000 .... ");
+    console.log("Listening to port 3000.... ");
 });
 
 // Root page response
