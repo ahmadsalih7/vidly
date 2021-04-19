@@ -3,11 +3,10 @@ const express = require('express');
 const logger = require('./logger');
 const startupDebugger = require('debug')('app:startup');
 const dbdebugger = require('debug')('app:db');
-
 const app = express();
-
 const Joi = require('joi');
 
+app.set('view engine', 'pug');
 app.use(express.json());
 app.use(logger);
 app.use(express.static("public"));
@@ -31,7 +30,7 @@ app.listen(3000, ()=>{
 
 // Root page response
 app.get('/', (req, res) => {
-    res.send("Welcome to Vidly project");
+    res.render('index', {title: "Vidly", message: "Welcome to Vidly"});
 });
 
 // Get genres response
