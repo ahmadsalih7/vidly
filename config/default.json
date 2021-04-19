@@ -1,0 +1,6 @@
+{
+    "name": "vidly",
+    "version": "1.0.0",
+    "host": "localhost",
+    "port": 3000
+}

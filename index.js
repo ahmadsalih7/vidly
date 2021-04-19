@@ -1,3 +1,4 @@
+const config = require('config');
 const express = require('express');
 const logger = require('./logger');
 
@@ -8,6 +9,9 @@ const Joi = require('joi');
 app.use(express.json());
 app.use(logger);
 app.use(express.static("public"));
+
+console.log(`name: ${config.get('name')}`);
+console.log(`password: ${config.get('mail.password')}`);
 
 var genres = [
     {id: 1, name: "Horror"},
