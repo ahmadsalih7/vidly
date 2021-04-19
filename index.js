@@ -1,6 +1,8 @@
 const config = require('config');
 const express = require('express');
 const logger = require('./logger');
+const startupDebugger = require('debug')('app:startup');
+const dbdebugger = require('debug')('app:db');
 
 const app = express();
 
@@ -12,6 +14,9 @@ app.use(express.static("public"));
 
 console.log(`name: ${config.get('name')}`);
 console.log(`password: ${config.get('mail.password')}`);
+
+startupDebugger("This is a startup message");
+dbdebugger("This is a db message");
 
 var genres = [
     {id: 1, name: "Horror"},
