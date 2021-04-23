@@ -1,12 +1,29 @@
 //import router object
 const express = require('express');
+const mongoose = require ('mongoose');
 router = express.Router();
 
-var genres = [
-    {id: 1, name: "Horror"},
-    {id: 2, name: "Action"},
-    {id: 3, name: "Comdey"},
-];
+//Connect to a local mongodb data base
+mongoose.connect('mongodb://localhost/genres',{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  })
+  .then(() => console.log('Connected to mongodb....'))
+  .catch((err) => console.log(err.message));
+
+  //Create mongoose schema
+  const genreSchema = mongoose.Schema({
+    genre: {
+        type: String,
+        required: true,
+        mingLength: 3
+    }
+  }) ;
+
+  //create a mongoose model
+const Genre = mongoose.model('genre', genreSchema);
 
 // Get genres response
 router.get('/', (req, res)=>{
