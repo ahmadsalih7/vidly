@@ -63,9 +63,9 @@ router.post('/', async (req, res)=>{
 
 // Update genre using PUT request
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
     // Check if the ID is existed
-    const genre = genres.find(x=> x.id === parseInt(req.params.id));
+    const genre = await Genre.findById(req.params.id);
     // if there is no genre found
     if (!genre) return res.status(404).send("No genre was found with this ID.");
     //validate the JSON input is a valid genre object
@@ -73,9 +73,12 @@ router.put('/:id', (req, res) => {
     // If it's  not valid send the error and return
     if (error) return res.status(400).send(error.details[0].message);
     // else update genre object
-    genre.name = req.body.name;
+    genre.set({
+        name: req.body.name
+    });
+    const result = await genre.save();
     // response with the appended genre
-    res.send(genre);
+    res.send(result);
 });
 
 // delete genres using delete request
