@@ -28,10 +28,10 @@ mongoose.connect('mongodb://localhost/genres',{
 const Genre = mongoose.model('genre', genreSchema);
 
 // Get genres response
-router.get('/', (req, res)=>{
+router.get('/', async (req, res)=>{
     //Getting docs from data base
-    Genre.find()
-    .then(genres => res.send(genres))
+    const genres = await Genre.find();
+    res.send(genres);
 });
 
 // Get genre by ID
@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) =>{
 });
 
 // Add genre using POST 
-router.post('/', (req, res)=>{
+router.post('/', async (req, res)=>{
     //validate the JSON input is a valid genre object
     const {error} = validateGenre (req.body);
     // If it's  not valid send the error and return
@@ -56,9 +56,9 @@ router.post('/', (req, res)=>{
     });
     console.log(genre);
     //Save to db
-    genre.save()
+    const result = await genre.save();
     //Create a response with the genre
-    .then((result)=> res.send(result));
+    res.send(result);
 });
 
 // Update genre using PUT request
