@@ -36,10 +36,14 @@ router.get('/', async (req, res)=>{
 
 // Get genre by ID
 router.get('/:id', async (req, res) =>{
+    try{
     // Check if the ID is existed
     const genre = await Genre.findById(req.params.id);
+    }
+    catch{
     // if there is no genre found 
-    if (!genre) return res.status(404).send("No genre was found with this ID.");
+    return res.status(404).send("No genre was found with this ID.");
+    }
     // else: 
     res.send(genre);
 });
@@ -64,10 +68,14 @@ router.post('/', async (req, res)=>{
 // Update genre using PUT request
 
 router.put('/:id', async (req, res) => {
-    // Check if the ID is existed
-    const genre = await Genre.findById(req.params.id);
-    // if there is no genre found
-    if (!genre) return res.status(404).send("No genre was found with this ID.");
+    try{
+        // Check if the ID is existed
+        const genre = await Genre.findById(req.params.id);
+    }
+    catch {
+        // if there is no genre found
+        return res.status(404).send("No genre was found with this ID.");
+    }
     //validate the JSON input is a valid genre object
     const {error} = validateGenre (req.body);
     // If it's  not valid send the error and return
