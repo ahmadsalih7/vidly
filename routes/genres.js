@@ -1,8 +1,10 @@
 //import router object
 const express = require('express');
 const mongoose = require ('mongoose');
+const Joi = require('joi');
 router = express.Router();
 
+router.use(express.json())
 //Connect to a local mongodb data base
 mongoose.connect('mongodb://localhost/genres',{
     useNewUrlParser: true,
@@ -48,15 +50,15 @@ router.post('/', (req, res)=>{
     const {error} = validateGenre (req.body);
     // If it's  not valid send the error and return
     if (error) return res.status(400).send(error.details[0].message);
-    // else create genre object
-    const genre = {
-        id: genres.length + 1,
+    // else create a Genre instance
+    const genre = new Genre({
         name: req.body.name
-    };
-    // append it to the current genres 
-    genres.push(genre);
-    // response with the appended genre
-    res.send(genre);
+    });
+    console.log(genre);
+    //Save to db
+    genre.save()
+    //Create a response with the genre
+    .then((result)=> res.send(result));
 });
 
 // Update genre using PUT request
