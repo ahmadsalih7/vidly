@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost/genres',{
 
   //Create mongoose schema
   const genreSchema = mongoose.Schema({
-    genre: {
+    name: {
         type: String,
         required: true,
         mingLength: 3
