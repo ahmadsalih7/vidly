@@ -27,7 +27,9 @@ const Genre = mongoose.model('genre', genreSchema);
 
 // Get genres response
 router.get('/', (req, res)=>{
-    res.send(genres);
+    //Getting docs from data base
+    Genre.find()
+    .then(genres => res.send(genres))
 });
 
 // Get genre by ID
