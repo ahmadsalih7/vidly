@@ -90,18 +90,21 @@ router.put('/:id', async (req, res) => {
 });
 
 // delete genres using delete request
-router.delete('/:id', (req, res)=> {
-// Check if the ID is existed
-const genre = genres.find(x=> x.id === parseInt(req.params.id));
-// if there is no genre found
-if (!genre) return res.status(404).send("No genre was found with this ID.");
-// else delete genre object
-const index = genres.indexOf(genre);
-genres.splice(index, 1);
+router.delete('/:id', async (req, res)=> {
+try{
+    // Check if the ID is existed
+    const genre = await Genre.findById(req.params.id);
+    // else delete genre object
+    await genre.remove();
+    //Response with the deleted genre
+    res.send(genre);
+}
 
-//Response with the deleted genre
-res.send(genre);
+catch{
+    // if there is no genre found
+    return res.status(404).send("No genre was found with this ID.");
 
+}
 });
 
 
