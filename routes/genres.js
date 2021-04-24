@@ -35,9 +35,9 @@ router.get('/', (req, res)=>{
 });
 
 // Get genre by ID
-router.get('/:id', (req, res) =>{
+router.get('/:id', async (req, res) =>{
     // Check if the ID is existed
-    const genre = genres.find(x=> x.id === parseInt(req.params.id));
+    const genre = await Genre.findById(req.params.id);
     // if there is no genre found 
     if (!genre) return res.status(404).send("No genre was found with this ID.");
     // else: 
