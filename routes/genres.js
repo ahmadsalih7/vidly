@@ -39,13 +39,12 @@ router.get('/:id', async (req, res) =>{
     try{
     // Check if the ID is existed
     const genre = await Genre.findById(req.params.id);
+    res.send(genre);
     }
     catch{
     // if there is no genre found 
     return res.status(404).send("No genre was found with this ID.");
     }
-    // else: 
-    res.send(genre);
 });
 
 // Add genre using POST 
@@ -71,22 +70,23 @@ router.put('/:id', async (req, res) => {
     try{
         // Check if the ID is existed
         const genre = await Genre.findById(req.params.id);
+        //validate the JSON input is a valid genre object
+        const {error} = validateGenre (req.body);
+        // If it's  not valid send the error and return
+        if (error) return res.status(400).send(error.details[0].message);
+        // else update genre object
+        genre.set({
+            name: req.body.name
+        });
+        const result = await genre.save();
+        // response with the appended genre
+        res.send(result);
+
     }
     catch {
         // if there is no genre found
         return res.status(404).send("No genre was found with this ID.");
     }
-    //validate the JSON input is a valid genre object
-    const {error} = validateGenre (req.body);
-    // If it's  not valid send the error and return
-    if (error) return res.status(400).send(error.details[0].message);
-    // else update genre object
-    genre.set({
-        name: req.body.name
-    });
-    const result = await genre.save();
-    // response with the appended genre
-    res.send(result);
 });
 
 // delete genres using delete request
