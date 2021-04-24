@@ -1,4 +1,5 @@
 const config = require('config');
+const mongoose = require ('mongoose');
 const express = require('express');
 const logger = require('./middleware/logger');
 const startupDebugger = require('debug')('app:startup');
@@ -13,9 +14,20 @@ app.use(express.json());
 app.use(logger);
 app.use(express.static("public"));
 app.use('/', home);
-console.log(`name: ${config.get('name')}`);
-console.log(`password: ${config.get('mail.password')}`);
+// console.log(`name: ${config.get('name')}`);
+// console.log(`password: ${config.get('mail.password')}`);
 
+//Connect to a local mongodb data base
+mongoose.connect('mongodb://localhost/genres',{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  })
+  .then(() => console.log('Connected to mongodb....'))
+  .catch((err) => console.log(err.message));
+
+  
 startupDebugger("This is a startup message");
 dbdebugger("This is a db message");
 

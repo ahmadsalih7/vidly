@@ -5,15 +5,6 @@ const Joi = require('joi');
 router = express.Router();
 
 router.use(express.json())
-//Connect to a local mongodb data base
-mongoose.connect('mongodb://localhost/genres',{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  })
-  .then(() => console.log('Connected to mongodb....'))
-  .catch((err) => console.log(err.message));
 
   //Create mongoose schema
   const genreSchema = mongoose.Schema({
