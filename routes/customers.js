@@ -1,28 +1,10 @@
 //import router object
 const express = require('express');
 const mongoose = require ('mongoose');
-const Joi = require('joi');
+const {Customer, validate} = require('../models/customers');
 router = express.Router();
 
 router.use(express.json());
-//create a mongoose model
-const Customer = mongoose.model('customer', mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        mingLength: 3
-    },
-    isGold:{
-        type: Boolean,
-        default: false,
-    },
-    phone: {
-        type: String,
-        required: true,
-        mingLength: 5
-    }
-  }) 
-);
 
 // Get customers response
 router.get('/', async (req, res)=>{
@@ -47,7 +29,7 @@ router.get('/:id', async (req, res) =>{
 // Add customer using POST 
 router.post('/', async (req, res)=>{
     //validate the JSON input is a valid customer object
-    const {error} = validateCustomer (req.body);
+    const {error} = validate (req.body);
     // If it's  not valid send the error and return
     if (error) return res.status(400).send(error.details[0].message);
     // else create a Customer instance
@@ -63,7 +45,7 @@ router.post('/', async (req, res)=>{
 
 router.put('/:id', async (req, res) => {
     //validate the JSON input is a valid customer object
-    const {error} = validateCustomer (req.body);
+    const {error} = validate (req.body);
     // If it's  not valid send the error and return
      if (error) return res.status(400).send(error.details[0].message);
      //Update
@@ -98,20 +80,6 @@ catch{
 
 }
 });
-
-
-
-// add validate function
-function validateCustomer(customer) {
-    //Define schema 
-    const schema = Joi.object({
-        name: Joi.string().min(3).required(),
-        isGold: Joi.boolean(),
-        phone: Joi.string().required()
-    });
-    
-    return schema.validate(customer);
-}
 
 //export the Router obejct
 module.exports = router;
