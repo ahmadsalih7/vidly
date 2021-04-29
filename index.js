@@ -6,9 +6,11 @@ const startupDebugger = require('debug')('app:startup');
 const dbdebugger = require('debug')('app:db');
 const app = express();
 const genres = require('./routes/genres');
+const customers = require('./routes/customers');
 const home = require('./routes/home');
 
 app.use('/api/genres', genres);
+app.use('/api/customers', customers);
 app.set('view engine', 'pug');
 app.use(express.json());
 app.use(logger);
