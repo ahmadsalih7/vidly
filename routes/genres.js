@@ -1,22 +1,11 @@
 //import router object
 const express = require('express');
 const mongoose = require ('mongoose');
-const Joi = require('joi');
+const {Genre, validate} = require('../models/genres');
 router = express.Router();
 
 router.use(express.json())
 
-  //Create mongoose schema
-  const genreSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        mingLength: 3
-    }
-  }) ;
-
-  //create a mongoose model
-const Genre = mongoose.model('genre', genreSchema);
 
 // Get genres response
 router.get('/', async (req, res)=>{
@@ -41,7 +30,7 @@ router.get('/:id', async (req, res) =>{
 // Add genre using POST 
 router.post('/', async (req, res)=>{
     //validate the JSON input is a valid genre object
-    const {error} = validateGenre (req.body);
+    const {error} = validate (req.body);
     // If it's  not valid send the error and return
     if (error) return res.status(400).send(error.details[0].message);
     // else create a Genre instance
@@ -62,7 +51,7 @@ router.put('/:id', async (req, res) => {
         // Check if the ID is existed
         const genre = await Genre.findById(req.params.id);
         //validate the JSON input is a valid genre object
-        const {error} = validateGenre (req.body);
+        const {error} = validate (req.body);
         // If it's  not valid send the error and return
         if (error) return res.status(400).send(error.details[0].message);
         // else update genre object
@@ -98,18 +87,5 @@ catch{
 }
 });
 
-
-
-// add validate function
-function validateGenre(genre) {
-    //Define schema 
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
-    });
-    
-    return schema.validate(genre);
-}
-
 //export the Router obejct
-
 module.exports = router;
