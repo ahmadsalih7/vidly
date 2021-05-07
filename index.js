@@ -8,9 +8,11 @@ const app = express();
 const genres = require('./routes/genres');
 const customers = require('./routes/customers');
 const home = require('./routes/home');
+const movies = require('./routes/movies');
 
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
+app.use('/api/movies', movies);
 app.set('view engine', 'pug');
 app.use(express.json());
 app.use(logger);
@@ -20,7 +22,7 @@ app.use('/', home);
 // console.log(`password: ${config.get('mail.password')}`);
 
 //Connect to a local mongodb data base
-mongoose.connect('mongodb://localhost/genres',{
+mongoose.connect('mongodb://localhost/vidly',{
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

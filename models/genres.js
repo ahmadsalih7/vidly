@@ -23,6 +23,6 @@ function validateGenre(genre) {
     
     return schema.validate(genre);
 }
-
+exports.genreSchema = genreSchema;
 exports.Genre = Genre;
 exports.validate = validateGenre;

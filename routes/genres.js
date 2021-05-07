@@ -4,7 +4,7 @@ const mongoose = require ('mongoose');
 const {Genre, validate} = require('../models/genres');
 router = express.Router();
 
-router.use(express.json())
+router.use(express.json());
 
 
 // Get genres response
@@ -37,7 +37,6 @@ router.post('/', async (req, res)=>{
     const genre = new Genre({
         name: req.body.name
     });
-    console.log(genre);
     //Save to db
     const result = await genre.save();
     //Create a response with the genre
