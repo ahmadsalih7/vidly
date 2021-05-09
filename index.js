@@ -9,10 +9,12 @@ const genres = require('./routes/genres');
 const customers = require('./routes/customers');
 const home = require('./routes/home');
 const movies = require('./routes/movies');
+const rentals = require('./routes/rentals');
 
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
 app.use('/api/movies', movies);
+app.use('/api/rentals', rentals);
 app.set('view engine', 'pug');
 app.use(express.json());
 app.use(logger);

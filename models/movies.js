@@ -2,7 +2,7 @@ const mongoose = require ('mongoose');
 const Joi = require('joi');
 const {genreSchema} =require('./genres');
 
-const Movie = mongoose.model('movie', mongoose.Schema({
+const movieSchema = mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -16,12 +16,13 @@ const Movie = mongoose.model('movie', mongoose.Schema({
         type: Number,
         default: 0
     },
-    DailyRentalRate: {
+    dailyRentalRate: {
         type: Number,
         default: 0
     }
-  }) 
-);
+  });
+
+const Movie = mongoose.model('movie', movieSchema);
 
 // add validate function
 function validateMovie(movie) {
@@ -36,3 +37,4 @@ function validateMovie(movie) {
 
 exports.Movie = Movie;
 exports.validate = validateMovie;
+module.exports.movieSchema = movieSchema;

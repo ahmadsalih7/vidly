@@ -1,7 +1,7 @@
 const mongoose = require ('mongoose');
 const Joi = require('joi');
-//create a mongoose model
-const Customer = mongoose.model('customer', mongoose.Schema({
+
+const customerSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -16,8 +16,10 @@ const Customer = mongoose.model('customer', mongoose.Schema({
         required: true,
         mingLength: 5
     }
-  }) 
-);
+  }) ;
+
+//create a mongoose model
+const Customer = mongoose.model('customer', customerSchema);
 
 
 // add validate function
@@ -33,3 +35,4 @@ function validateCustomer(customer) {
 }
 exports.Customer = Customer;
 exports.validate = validateCustomer;
+module.exports.customerSchema = customerSchema;
