@@ -2,6 +2,10 @@ const express = require('express');
 const { Customer } = require('../models/customers');
 const { Movie } = require('../models/movies');
 const {Rental, validate} = require('../models/rentals');
+const mongoose = require('mongoose');
+const Fawn = require('fawn');
+
+Fawn.init(mongoose);
 
 const router = express.Router();
 router.use(express.json());
@@ -45,12 +49,18 @@ router.post('/', async (req, res)=>{
         customer: customer,
         movie: movie  
     });
-    //Save to db
-    const result = await rental.save();
-    movie.numberInStock --;
-    movie.save();
-    //Create a response with the movie
-    res.send(result);
+    try {
+        new Fawn.Task()
+        .save('rentals', rental)
+        .update('movies', {_id: movie._id}, {
+            $inc: {numberInStock: -1}
+        })
+        .run();
+        res.send(rental);
+    }
+    catch{
+        res.status(500).send("Internal error...");
+    }
 });
 
 module.exports = router;
