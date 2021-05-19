@@ -37,6 +37,10 @@ mongoose.connect('mongodb://localhost/vidly',{
   .then(() => console.log('Connected to mongodb....'))
   .catch((err) => console.log(err.message));
 
+  if(!config.get('jwtPrivateKey')){
+    console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+    process.exit(1);
+  }
   
 startupDebugger("This is a startup message");
 dbdebugger("This is a db message");
