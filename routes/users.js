@@ -1,4 +1,5 @@
 const express = require('express');
+const _ = require('lodash');
 const { model } = require('mongoose');
 const {User, validate} = require('../models/users');
 
@@ -19,16 +20,8 @@ router.post('/',async(req, res) => {
     //Fetch the user data
     let user = await User.findOne({email: req.body.email});
     if (user) return res.status(400).send('User Already exists');
-    user = new User ({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
-
-    });
-    
+    user = new User (_.pick(req.body, ['name', 'email', 'password']));
     user.save();
-    res.send(user);
+    res.send(_.pick(user, ['_id', 'name', 'email']));
 } );
-
-
 module.exports = router;
