@@ -1,6 +1,7 @@
 //import router object
 const express = require('express');
 const mongoose = require ('mongoose');
+const auth = require('../middleware/auth');
 const {Genre, validate} = require('../models/genres');
 router = express.Router();
 
@@ -28,7 +29,7 @@ router.get('/:id', async (req, res) =>{
 });
 
 // Add genre using POST 
-router.post('/', async (req, res)=>{
+router.post('/', auth, async (req, res)=>{
     //validate the JSON input is a valid genre object
     const {error} = validate (req.body);
     // If it's  not valid send the error and return
