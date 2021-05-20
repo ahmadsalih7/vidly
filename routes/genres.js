@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require ('mongoose');
 const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const {Genre, validate} = require('../models/genres');
 router = express.Router();
 
@@ -70,7 +71,7 @@ router.put('/:id', auth, async (req, res) => {
 });
 
 // delete genres using delete request
-router.delete('/:id', async (req, res)=> {
+router.delete('/:id', auth, admin, async (req, res)=> {
 try{
     // Check if the ID is existed
     const genre = await Genre.findById(req.params.id);
