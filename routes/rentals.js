@@ -4,6 +4,8 @@ const { Movie } = require('../models/movies');
 const {Rental, validate} = require('../models/rentals');
 const mongoose = require('mongoose');
 const Fawn = require('fawn');
+const auth = require('../middleware/auth');
+
 
 Fawn.init(mongoose);
 
@@ -16,7 +18,7 @@ router.get('/', async (req, res)=>{
     res.send(rentals);
 });
 
-router.post('/', async (req, res)=>{
+router.post('/', auth, async (req, res)=>{
     //validate the JSON input is a valid movie object
     const {error} = validate (req.body);
     // If it's  not valid send the error and return

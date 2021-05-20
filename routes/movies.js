@@ -2,6 +2,7 @@ const {Movie, validate} = require('../models/movies');
 const {Genre} = require('../models/genres');
 const express = require('express');
 const mongoose = require('mongoose');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -27,7 +28,7 @@ router.get('/:id', async (req, res) =>{
     }
 });
 //add movie
-router.post('/', async (req, res)=>{
+router.post('/', auth, async (req, res)=>{
     //validate the JSON input is a valid movie object
     const {error} = validate (req.body);
     // If it's  not valid send the error and return
@@ -58,7 +59,7 @@ router.post('/', async (req, res)=>{
 
 // Update movie using PUT request
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth,  async (req, res) => {
     try{
         // Check if the ID is existed
         const movie = await Movie.findById(req.params.id);

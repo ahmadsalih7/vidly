@@ -1,6 +1,7 @@
 //import router object
 const express = require('express');
 const mongoose = require ('mongoose');
+const auth = require('../middleware/auth');
 const {Customer, validate} = require('../models/customers');
 router = express.Router();
 
@@ -27,7 +28,7 @@ router.get('/:id', async (req, res) =>{
 );
 
 // Add customer using POST 
-router.post('/', async (req, res)=>{
+router.post('/', auth, async (req, res)=>{
     //validate the JSON input is a valid customer object
     const {error} = validate (req.body);
     // If it's  not valid send the error and return
@@ -43,7 +44,7 @@ router.post('/', async (req, res)=>{
 
 // Update customer using PUT request
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     //validate the JSON input is a valid customer object
     const {error} = validate (req.body);
     // If it's  not valid send the error and return

@@ -46,7 +46,7 @@ router.post('/', auth, async (req, res)=>{
 
 // Update genre using PUT request
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     try{
         // Check if the ID is existed
         const genre = await Genre.findById(req.params.id);
