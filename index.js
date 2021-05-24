@@ -1,4 +1,5 @@
 require('express-async-errors');
+const winston = require('winston');
 const errorHandler = require('./middleware/error')
 const config = require('config');
 const mongoose = require ('mongoose');
@@ -14,6 +15,8 @@ const movies = require('./routes/movies');
 const rentals = require('./routes/rentals');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
 
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
