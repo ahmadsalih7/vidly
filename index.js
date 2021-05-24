@@ -1,3 +1,5 @@
+require('express-async-errors');
+const errorHandler = require('./middleware/error')
 const config = require('config');
 const mongoose = require ('mongoose');
 const express = require('express');
@@ -24,6 +26,7 @@ app.use(express.json());
 app.use(logger);
 app.use(express.static("public"));
 app.use('/', home);
+app.use(errorHandler)
 // console.log(`name: ${config.get('name')}`);
 // console.log(`password: ${config.get('mail.password')}`);
 
