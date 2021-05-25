@@ -18,9 +18,19 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 
 
-process.on('uncaughtException', (ex) => {
+/* process.on('uncaughtException', (ex) => {
   console.log('We have got uncaught exception');
   winston.error(ex.message, ex);
+}) */
+
+winston.exceptions.handle(
+  new winston.transports.File({filename: "uncaughtExceptions.log"})
+);
+
+process.on('unhandledRejection', (ex) => {
+  /* console.log('We have got unhandled Rejection');
+  winston.error(ex.message, ex); */
+  throw ex; //to throw an exception to be handeled by winston
 })
 
 

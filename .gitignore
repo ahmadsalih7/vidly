@@ -1,3 +1,4 @@
 node_modules/
 myapi.rest
 logfile.log
+uncaughtExceptions.log
