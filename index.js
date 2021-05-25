@@ -2,13 +2,13 @@ require('express-async-errors');
 const winston = require('winston');
 require('winston-mongodb');
 const config = require('config');
-const mongoose = require ('mongoose');
 const express = require('express');
 const logger = require('./middleware/logger');
 const startupDebugger = require('debug')('app:startup');
 const dbdebugger = require('debug')('app:db');
 const app = express();
 require('./startup/routes')(app);
+require('./startup/db')();
 
 /* process.on('uncaughtException', (ex) => {
   console.log('We have got uncaught exception');
@@ -33,16 +33,6 @@ app.use(logger);
 app.use(express.static("public"));
 // console.log(`name: ${config.get('name')}`);
 // console.log(`password: ${config.get('mail.password')}`);
-
-//Connect to a local mongodb data base
-mongoose.connect('mongodb://localhost/vidly',{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  })
-  .then(() => console.log('Connected to mongodb....'))
-  .catch((err) => console.log(err.message));
 
   if(!config.get('jwtPrivateKey')){
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');
