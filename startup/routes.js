@@ -7,6 +7,8 @@ const rentals = require('../routes/rentals');
 const users = require('../routes/users');
 const auth = require('../routes/auth');
 const errorHandler = require('../middleware/error')
+const logger = require('../middleware/logger');
+
 
 module.exports = function (app) {
     app.use(express.json());
@@ -19,5 +21,7 @@ module.exports = function (app) {
     app.use('/api/auth', auth);
     app.set('view engine', 'pug');
     app.use(errorHandler)
+    app.use(logger);
+    app.use(express.static("public"));
    
 }
