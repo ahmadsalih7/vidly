@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "host": "localhost",
     "port": 3000,
-    "jwtPrivateKey": "1"
+    "jwtPrivateKey": "1234",
+    "db": "mongodb://localhost/vidly_test"
 
 }
