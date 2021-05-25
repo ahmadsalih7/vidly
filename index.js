@@ -17,6 +17,13 @@ const rentals = require('./routes/rentals');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 
+
+process.on('uncaughtException', (ex) => {
+  console.log('We have got uncaught exception');
+  winston.error(ex.message, ex);
+})
+
+
 winston.add(new winston.transports.File({ filename: 'logfile.log' }));
 winston.add(new winston.transports.MongoDB({ db:'mongodb://localhost/vidly'}));
 
