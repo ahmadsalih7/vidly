@@ -3,3 +3,4 @@ myapi.rest
 logfile.log
 uncaughtExceptions.log
 tests
+coverage/
