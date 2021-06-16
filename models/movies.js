@@ -18,7 +18,7 @@ const movieSchema = mongoose.Schema({
     },
     dailyRentalRate: {
         type: Number,
-        default: 0
+        default: 2
     }
   });
 
